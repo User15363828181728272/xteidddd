@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request</title>
+    <meta name="title" content=" Request | XTE API">
+    <meta name="description" content="Kirim permintaan fitur, endpoint API, atau scraper secara aman ke tim XTE ID. Enkripsi ujung-ke-ujung untuk data sensitif kamu.">
+    <meta name="keywords" content="XTE ID, Request API, Secure Endpoint, Scraper Request, Backend Developer Indonesia">
+    <meta name="author" content="defandryan">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://api.xte.web.id/">
+    <meta property="og:title" content="XTE APIS">
+    <meta property="og:description" content="Bridge secure request untuk integrasi API dan pengembangan fitur custom.">
+    <meta property="og:image" content="src/icon.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://api.xte.web.id/">
+    <meta property="twitter:title" content="XTE APIS">
+    <meta property="twitter:image" content="src/icon.jpg">
+    <link rel="canonical" href="https://api.xte.web.id/">
+    <link rel="icon" type="image/jpeg" href="src/icon.jpg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+        :root { --primary: #FF4500; --secondary: #0A0A0A; --bg: #FFFFFF; --card-bg: #F9F9FB; --ease: cubic-bezier(0.23, 1, 0.32, 1); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: #0A0A0A; -webkit-font-smoothing: antialiased; }
+        .nav-glass { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 1200px; height: 60px; background: rgba(255,255,255,0.85); backdrop-filter: blur(25px); border: 1px solid rgba(0,0,0,0.05); border-radius: 20px; z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--secondary); font-family: 'Space Grotesk', sans-serif; font-weight: 800; }
+        .request-header { padding: 120px 20px 30px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .request-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 10vw, 64px); font-weight: 800; line-height: 1; letter-spacing: -2px; }
+        .request-title span { color: transparent; -webkit-text-stroke: 1px var(--secondary); }
+        .form-container { max-width: 800px; margin: 0 auto 100px; padding: 0 15px; }
+        .request-card { background: var(--card-bg); border-radius: 30px; padding: 30px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 20px 40px rgba(0,0,0,0.02); }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; color: var(--secondary); opacity: 0.6; }
+        .input-field { width: 100%; background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 18px; padding: 18px; font-family: inherit; transition: var(--ease); font-size: 14px; }
+        .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255, 69, 0, 0.05); }
+        textarea.input-field { min-height: 200px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6; resize: vertical; }
+        .submit-btn { width: 100%; height: 64px; background: var(--secondary); color: white; border: none; border-radius: 20px; font-weight: 800; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: var(--ease); margin-top: 10px; }
+        .submit-btn:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 69, 0, 0.2); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .status-box { margin-top: 25px; background: #000; border-radius: 24px; display: none; flex-direction: column; height: 350px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .status-nav { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; background: #0A0A0A; }
+        .status-scroll { overflow: auto; flex-grow: 1; padding: 20px; cursor: move; scroll-behavior: smooth; }
+        pre { color: #00FF00; font-family: 'JetBrains Mono', monospace; font-size: 12px; white-space: pre-wrap; word-wrap: break-word; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--secondary); color: white; padding: 18px 35px; border-radius: 22px; font-weight: 800; font-size: 12px; z-index: 9999; transition: 0.6s var(--ease); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .toast.visible { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+    <nav class="nav-glass">
+        <a href="#" class="brand">
+            <i class="material-icons" style="color: var(--primary)">shield</i>
+            <span>Request <span>Endpoint</span></span>
+        </a>
+    </nav>
+    <header class="request-header">
+        <h1 class="request-title">XTE ID <br><span>REQUEST.</span></h1>
+    </header>
+    <div class="form-container">
+        <div class="request-card">
+            <form id="requestForm" onsubmit="return false">
+                <div class="input-group">
+                    <label>Nama Endpoint / Fitur</label>
+                    <input type="text" id="featName" class="input-field" placeholder="Ketik nama fitur (e.g. Tiktok Downloader)..." required>
+                </div>
+                <div class="input-group">
+                    <label>Detail / Scraper Code</label>
+                    <textarea id="featDetail" class="input-field" placeholder="Tempelkan code scraper atau deskripsi teknis di sini..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn" id="submitBtn" onclick="sendSecurePush()">
+                    <i class="material-icons">send</i>
+                    Submit Request
+                </button>
+            </form>
+            <div class="status-box" id="statusBox">
+                <div class="status-nav">
+                    <span style="color:#00FF00; font-size:11px; font-weight:900; letter-spacing:1px;">LOG</span>
+                    <div style="display:flex; gap:5px;"><div style="width:8px; height:8px; border-radius:50%; background:#FF5F56;"></div><div style="width:8px; height:8px; border-radius:50%; background:#FFBD2E;"></div><div style="width:8px; height:8px; border-radius:50%; background:#27C93F;"></div></div>
+                </div>
+                <div class="status-scroll" id="scrollContainer" onmousedown="startDrag(event, this)">
+                    <pre id="outputLog"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="toast">REQUEST SUCCESS</div>
+    <script>
+        let config = { version: "Unknown", token_mask: "None" };
+        async function fetchConfig() {
+            try {
+                const res = await fetch('/api/config');
+                const data = await res.json();
+                config = data;
+            } catch (e) {}
+        }
+        window.onload = fetchConfig;
+        async function sendSecurePush() {
+            const name = document.getElementById('featName').value;
+            const detail = document.getElementById('featDetail').value;
+            const log = document.getElementById('outputLog');
+            const box = document.getElementById('statusBox');
+            const btn = document.getElementById('submitBtn');
+            if(!name || !detail) return;
+            btn.disabled = true;
+            box.style.display = 'flex';
+            log.textContent = `[SYSTEM] Handshake initialized...\n`;
+            log.textContent += `[INFO] Bridge: ${config.version || 'v1.0.0-Stable'}\n`;
+            log.textContent += `[INFO] Token Sync: ${config.token_preview || 'Using Server Token'}\n`;
+            try {
+                log.textContent += `[PROCESS] Encrypting payload metadata...\n`;
+                const res = await fetch('/api/request', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, detail, timestamp: Date.now() })
+                });
+                log.textContent += `[NETWORK] Transmitting data to index.js...\n`;
+                const result = await res.json();
+                if(result.ok) {
+                    log.textContent += `[SUCCESS] Request accepted by master server.\n`;
+                    log.textContent += `[SUCCESS] Telegram Bot notified successfully.\n`;
+                    const toast = document.getElementById('toast');
+                    toast.classList.add('visible');
+                    setTimeout(() => { toast.classList.remove('visible'); btn.disabled = false; }, 3000);
+                } else {
+                    log.textContent += `[ERROR] Server Refusal: ${result.description || 'Access Denied'}\n`;
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                log.textContent += `[FATAL] Bridge Interrupted: ${e.message}\n`;
+                btn.disabled = false;
+            }
+        }
+        function startDrag(e, container) {
+            container.isDown = true;
+            container.startX = e.pageX - container.offsetLeft;
+            container.startY = e.pageY - container.offsetTop;
+            container.scrollLeftInit = container.scrollLeft;
+            container.scrollTopInit = container.scrollTop;
+            const move = (ev) => {
+                if (!container.isDown) return;
+                ev.preventDefault();
+                container.scrollLeft = container.scrollLeftInit - (ev.pageX - container.offsetLeft - container.startX);
+                container.scrollTop = container.scrollTopInit - (ev.pageY - container.offsetTop - container.startY);
+            };
+            const end = () => { container.isDown = false; window.removeEventListener('mousemove', move); };
+            window.addEventListener('mousemove', move);
+            window.addEventListener('mouseup', end);
+        }
+    </script>
+</body>
+</html>
