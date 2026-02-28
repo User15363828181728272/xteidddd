@@ -7,14 +7,10 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
-
-    { "src": "^/$", "dest": "/index.js" },
-    { "src": "^/docs$", "dest": "/index.js" },
-    { "src": "^/dev$", "dest": "/index.js" },
-    { "src": "^/nt$", "dest": "/index.js" },
-
-    { "src": "/(.*)", "dest": "/api-page/nt.html" }
+    {
+      "src": "/(.*)",
+      "dest": "/index.js"
+    }
   ],
   "env": {
     "NODE_ENV": "production"
