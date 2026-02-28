@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>XTE ID | Developer Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'xte-orange': '#FF5F00',
+                        'xte-black': '#0F172A',
+                        'xte-bg': '#0B0F1A',
+                        'xte-card': '#161B26'
+                    },
+                    fontFamily: {
+                        'sans': ['Plus Jakarta Sans', 'sans-serif'],
+                        'display': ['Space Grotesk', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #FF5F00; border-radius: 10px; }
+        
+        body { 
+            background-color: #0B0F1A;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .side-menu {
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .profile-card {
+            background: #161B26;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 3rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .profile-card:hover {
+            border-color: #FF5F00;
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(255, 95, 0, 0.2);
+        }
+
+        .profile-image {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 2.5rem;
+            border: 2px solid rgba(255, 95, 0, 0.3);
+            transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .profile-card:hover .profile-image {
+            border-color: #FF5F00;
+            transform: scale(1.08) rotate(3deg);
+            box-shadow: 0 0 30px rgba(255, 95, 0, 0.3);
+        }
+
+        .toast-notif {
+            transform: translateX(200%);
+            transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .toast-notif.active { transform: translateX(0); }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade { animation: fadeIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    </style>
+</head>
+<body class="font-sans text-[14px] overflow-x-hidden">
+
+    <nav class="fixed top-0 w-full h-[80px] bg-[#0B0F1A]/80 backdrop-blur-2xl border-b border-white/5 z-[100] px-8">
+        <div class="max-w-7xl mx-auto h-full flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-xte-orange/10 flex items-center justify-center border border-xte-orange/20">
+                    <img src="https://files.catbox.moe/piiki0.png" class="w-7 h-7 rounded-lg" alt="Logo">
+                </div>
+                <span class="font-display font-bold text-lg tracking-tight">XTE <span class="text-xte-orange">ID</span></span>
+            </div>
+            <button id="openMenu" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-xte-orange transition-all group">
+                <i class="material-icons-round text-white group-hover:scale-110">menu</i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="overlay" class="fixed inset-0 bg-black/80 opacity-0 invisible transition-all duration-500 z-[199]"></div>
+    <div id="sideMenu" class="side-menu fixed top-4 right-4 bottom-4 w-[85%] max-w-[320px] bg-[#161B26] z-[200] p-10 translate-x-[120%] border border-white/10 rounded-[2.5rem] shadow-2xl">
+        <div class="flex justify-between items-center mb-12">
+            <span class="text-xs font-black uppercase tracking-widest text-white/20">XTE Navigation</span>
+            <button id="closeMenu" class="text-white/40 hover:text-white">
+                <i class="material-icons-round">close</i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-2">
+            <a href="/" class="flex items-center gap-4 text-white/40 p-4 rounded-2xl hover:bg-white/5 hover:text-xte-orange transition-all">
+                <i class="material-icons-round">dashboard</i> 
+                <span class="font-bold">Dashboard</span>
+            </a>
+            <a href="/docs" class="flex items-center gap-4 text-white/40 p-4 rounded-2xl hover:bg-white/5 hover:text-xte-orange transition-all">
+                <i class="material-icons-round">api</i> 
+                <span class="font-bold">API Docs</span>
+            </a>
+            <a href="/dev" class="flex items-center gap-4 text-xte-orange p-4 rounded-2xl bg-xte-orange/10 font-bold">
+                <i class="material-icons-round">code</i> 
+                <span>Developer</span>
+            </a>
+        </div>
+    </div>
+
+    <div id="toast" class="toast-notif fixed bottom-8 right-8 bg-[#1E293B] border border-white/10 p-6 rounded-[2rem] z-[3000] w-[320px] shadow-2xl overflow-hidden">
+        <div class="absolute top-0 left-0 w-1.5 h-full bg-xte-orange"></div>
+        <button id="closeToast" class="absolute top-4 right-4 text-white/20 hover:text-white">
+            <i class="material-icons-round text-sm">close</i>
+        </button>
+        <p class="text-xte-orange text-[10px] font-black tracking-[3px] uppercase mb-2">Notice</p>
+        <p class="text-xs text-white/70 leading-relaxed mb-4 font-medium">Jangan lewatkan update terbaru dari API kami di Telegram.</p>
+        <a href="https://t.me/depstore11" target="_blank" class="flex items-center gap-2 text-[11px] font-bold text-white bg-white/5 px-4 py-2.5 rounded-xl hover:bg-xte-orange transition-colors">
+            <i class="material-icons-round text-sm">send</i> @depstore11
+        </a>
+    </div>
+
+    <div class="fixed bottom-8 left-8 font-mono text-[10px] text-white/20 bg-[#161B26] px-4 py-2.5 rounded-full border border-white/5 hidden sm:block" id="clock">
+        WIB: 00:00:00
+    </div>
+
+    <main class="min-h-screen flex items-center justify-center p-8 pt-32">
+        <div class="max-w-md w-full animate-fade">
+            <div class="profile-card p-12 text-center relative overflow-hidden">
+                <div class="absolute -top-16 -right-16 text-white/5 pointer-events-none">
+                    <i class="material-icons-round text-[240px]">terminal</i>
+                </div>
+
+                <div class="relative inline-block mb-10">
+                    <div class="animate-float">
+                        <img src="https://files.catbox.moe/piiki0.png" alt="XTE ID" class="profile-image shadow-2xl">
+                    </div>
+                    <div class="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-[5px] border-xte-card ring-1 ring-green-500/20"></div>
+                </div>
+
+                <div class="mb-10">
+                    <div class="flex justify-center mb-6">
+                        <span class="px-5 py-2 bg-xte-orange/10 text-xte-orange text-[10px] font-black uppercase tracking-[3px] rounded-full border border-xte-orange/20">
+                            Core Engineer
+                        </span>
+                    </div>
+                    <h1 class="text-4xl font-display font-bold tracking-tight text-white mb-2 uppercase">XTE <span class="text-xte-orange">ID</span></h1>
+                    <p class="text-[11px] font-mono text-white/30 uppercase tracking-[5px]">Infrastructure Architect</p>
+                </div>
+
+                <p class="text-[12px] text-white/50 font-medium leading-relaxed mb-10 max-w-[280px] mx-auto">
+                    Crafting high-performance API solutions and scalable backend systems for the XTE Ecosystem.
+                </p>
+
+                <div class="grid grid-cols-2 gap-4 mb-10">
+                    <div class="py-6 bg-black/30 rounded-[2rem] border border-white/5">
+                        <p id="apiCount" class="text-2xl font-display font-bold text-white tracking-tighter">0</p>
+                        <p class="text-[9px] font-black text-white/20 uppercase tracking-[2px] mt-1">Endpoints</p>
+                    </div>
+                    <div class="py-6 bg-black/30 rounded-[2rem] border border-white/5">
+                        <p class="text-2xl font-display font-bold text-white tracking-tighter">99.9%</p>
+                        <p class="text-[9px] font-black text-white/20 uppercase tracking-[2px] mt-1">Uptime</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://wa.me/6288242449961" class="flex-1 bg-xte-orange text-white py-5 rounded-[1.5rem] text-[11px] font-black uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-xte-orange/20">
+                        Get in Touch
+                    </a>
+                    <a href="https://t.me/depstore11" class="w-full sm:w-20 bg-white/5 text-white py-5 rounded-[1.5rem] flex items-center justify-center hover:bg-white/10 border border-white/10 transition-all">
+                        <i class="material-icons-round text-xl">send</i>
+                    </a>
+                </div>
+            </div>
+            
+            <footer class="text-center mt-12">
+                <p class="text-[9px] font-black text-white/10 uppercase tracking-[0.6em]">
+                    © <span id="year"></span> XTE AUTHORIZED OPERATOR
+                </p>
+            </footer>
+        </div>
+    </main>
+
+    <script>
+        const openBtn = document.getElementById('openMenu');
+        const closeBtn = document.getElementById('closeMenu');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('overlay');
+        const toast = document.getElementById('toast');
+        const closeToast = document.getElementById('closeToast');
+        const clock = document.getElementById('clock');
+        const year = document.getElementById('year');
+
+(function () {
+    const allowed = [
+        "/",
+        "/docs",
+        "/dev",
+        "/nt"
+    ];
+
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+
+    if (!allowed.includes(path)) {
+        window.location.replace("/nt");
+    }
+})();   
+
+        const toggleMenu = (isOpen) => {
+            sideMenu.style.transform = isOpen ? 'translateX(0)' : 'translateX(120%)';
+            overlay.style.opacity = isOpen ? '1' : '0';
+            overlay.style.visibility = isOpen ? 'visible' : 'hidden';
+        };
+
+        openBtn.onclick = () => toggleMenu(true);
+        closeBtn.onclick = () => toggleMenu(false);
+        overlay.onclick = () => toggleMenu(false);
+        closeToast.onclick = () => toast.classList.remove('active');
+
+        function updateClock() {
+            const time = new Date().toLocaleTimeString('en-GB', { 
+                timeZone: 'Asia/Jakarta',
+                hour12: false
+            });
+            clock.textContent = `WIB: ${time}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        year.textContent = new Date().getFullYear();
+
+        async function fetchStats() {
+            try {
+                const res = await fetch('src/schema.json');
+                const data = await res.json();
+                let count = 0;
+                if(data.paths) {
+                    Object.keys(data.paths).forEach(p => count += Object.keys(data.paths[p]).length);
+                }
+                document.getElementById('apiCount').textContent = count;
+            } catch(e) {
+                document.getElementById('apiCount').textContent = "250+";
+            }
+        }
+
+        window.onload = () => {
+            fetchStats();
+            setTimeout(() => toast.classList.add('active'), 2500);
+        };
+    </script>
+</body>
+</html>
