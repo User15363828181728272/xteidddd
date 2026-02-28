@@ -623,7 +623,7 @@
 
         async function fetchCount() {
             try {
-                const r = await fetch('src/schema.json');
+                const r = await fetch('src/openapi.json');
                 const d = await r.json();
                 let c = 0;
                 if(d.paths) {
