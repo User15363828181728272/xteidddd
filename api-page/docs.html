@@ -448,13 +448,6 @@ function filterByTag(tag){
     });
 }
 
-(function(){
-    const path = window.location.pathname.replace(/\/+$/,"")||"/";
-    if(path!=="/"&&!path.startsWith("/docs")&&!path.startsWith("/dev")){
-        window.location.replace("/nt");
-    }
-})();
-
 apiSearch.oninput = ()=>{
     clearTimeout(searchTimer);
     searchTimer = setTimeout(runSearch,120);
@@ -498,7 +491,7 @@ async function loadSchema(){
     const catRow = document.getElementById('catRow');
 
     try{
-        const r = await fetch('src/schema.json');
+        const r = await fetch('src/openapi.json');
         const data = await r.json();
 
         const tags = new Set();
