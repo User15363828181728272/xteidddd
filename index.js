@@ -30,7 +30,7 @@ app.set("json spaces", 2);
 app.use("/", express.static(path.join(__dirname, "api-page")));
 app.use("/src", express.static(path.join(__dirname, "src")));
 
-const openApiPath = path.join(__dirname, "src", "schema.json");
+const openApiPath = path.join(__dirname, "src", "openapi.json");
 let openApi = {};
 if (fs.existsSync(openApiPath)) {
     openApi = JSON.parse(fs.readFileSync(openApiPath));
@@ -124,7 +124,7 @@ app.get("/docs", (req, res) => res.sendFile(path.join(__dirname, "api-page", "do
 app.get("/nt", (req, res) => res.sendFile(path.join(__dirname, "api-page", "nt.html")));
 app.get("/dev", (req, res) => res.sendFile(path.join(__dirname, "api-page", "dev.html")));
 app.get("/req", (req, res) => res.sendFile(path.join(__dirname, "api-page", "r.html")));
-app.get("/schema.json", (req, res) => res.sendFile(openApiPath));
+app.get("/openapi.json", (req, res) => res.sendFile(openApiPath));
 
 app.use((err, req, res, next) => {
     const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
