@@ -1,0 +1,1882 @@
+{
+  "openapi": "3.0.7",
+  "info": {
+    "title": "XTE Apis",
+    "author": "D2:业",
+    "version": "v1.0.0",
+    "description": "Simple and easy to use API."
+  },
+  "servers": [
+    {
+      "url": "https://api.xte.web.id"
+    }
+  ],
+  "tags": [
+    { "name": "AI" },
+    { "name": "Anime" },
+    { "name": "Downloader" },
+    { "name": "Image" },
+    { "name": "Stalk" },
+    { "name": "Tempmail" },
+    { "name": "Tools" },
+    { "name": "Search" },
+    { "name": "maker" },
+    { "name": "News" }
+  ],
+  "paths": {
+    "/v1/ai/gpt-nano": {
+  "get": {
+    "summary": "GPT-4.1 Nano Chat",
+    "tags": ["AI"],
+    "parameters": [
+      {
+        "name": "query",
+        "in": "query",
+        "required": true,
+        "description": "Pesan untuk AI",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+},
+"/v1/ai/nanobanana": {
+  "post": {
+    "summary": "Nano Banana AI Image Swap",
+    "description": "Manipulasi gambar menggunakan AI Nano Banana (Face swap / Background swap).",
+    "tags": ["AI"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "image_base64": { "type": "string", "description": "Raw image dalam format Base64" },
+              "prompt": { "type": "string", "example": "ubah background ke pantai" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Proses AI Selesai",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "job_id": "b196...",
+                "image_url": "https://..."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/v2/ai/writify": {
+  "get": {
+    "tags": ["AI"],
+    "summary": "Writify AI Chat<",
+    "description": "AI Chat dengan sistem session handshake dari Writify.ai.",
+    "parameters": [
+      { 
+        "name": "ask", 
+        "in": "query", 
+        "required": true, 
+        "schema": { "type": "string" }, 
+        "example": "Tuliskan puisi singkat tentang kopi" 
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": "Hitam pekat dalam cangkir..."
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/v2/ai/softorbits": {
+  "get": {
+    "tags": ["AI"],
+    "summary": "SoftOrbits AI Chat",
+    "description": "AI Chat berbasis Cloudflare Workers yang diambil dari provider SoftOrbits.",
+    "parameters": [
+      { "name": "ask", "in": "query", "required": true, "schema": { "type": "string" }, "example": "Siapa pendiri Apple?" }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": "Pendiri Apple adalah Steve Jobs, Steve Wozniak, dan Ronald Wayne."
+            }
+          }
+        }
+      }
+    }
+  }
+},
+    "/ai/askai": {
+      "get": {
+        "summary": "AskAI (ChatGPT 4o)",
+        "tags": ["AI"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/ai/copilot": {
+      "get": {
+        "summary": "Copilot Chat",
+        "description": "Kirim pertanyaan ke Copilot Microsoft dan dapatkan jawaban beserta referensi/citations",
+        "tags": ["AI"],
+        "parameters": [
+          { "name": "message", "in": "query", "required": true, "description": "Pesan atau pertanyaan yang ingin dikirim ke Copilot", "schema": { "type": "string" } },
+          { "name": "model", "in": "query", "required": false, "description": "Model Copilot yang digunakan 'think-deeper', 'gpt-5'", "schema": { "type": "string", "enum": ["default", "think-deeper", "gpt-5"], "default": "default" } }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/ai/copilot-voice": {
+      "get": {
+        "summary": "Copilot Voice AI (JSON)",
+        "description": "Mendapatkan jawaban AI dalam format teks dan base64 audio.",
+        "tags": ["AI"],
+        "parameters": [{ "name": "text", "in": "query", "required": true, "description": "Input pertanyaan", "schema": { "type": "string", "example": "Halo, apa kabar?" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/v1/ai/deepai": {
+  "get": {
+    "summary": "DeepAI Chat Bot",
+    "description": "Chatting dengan AI menggunakan model standard DeepAI (Bypass mode).",
+    "tags": ["AI"],
+    "parameters": [
+      {
+        "name": "ask",
+        "in": "query",
+        "required": true,
+        "description": "Pertanyaan untuk AI",
+        "schema": { "type": "string" },
+        "example": "Siapa namamu?"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan jawaban AI",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "query": "Siapa namamu?",
+              "result": "I am an AI assistant powered by DeepAI."
+            }
+          }
+        }
+      }
+    }
+  }
+    },
+"/v2/ai/text2img": {
+  "get": {
+    "summary": "AI Text to Image (V1)",
+    "description": "Mengubah teks deskripsi menjadi gambar artistik menggunakan kecerdasan buatan.",
+    "tags": ["AI"],
+    "parameters": [
+      {
+        "name": "prompt",
+        "in": "query",
+        "required": true,
+        "description": "Deskripsi gambar yang ingin dibuat",
+        "schema": { "type": "string" },
+        "example": "A futuristic city with flying cars in van gogh style"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Hasil render AI (JPEG Image)",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+"/v2/ai/openaiid": {
+      "get": {
+        "tags": ["AI"],
+        "summary": "OpenAI",
+        "parameters": [{ "name": "ask", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+"/v2/ai/claude": {
+  "get": {
+    "tags": ["AI"],
+    "summary": "Claude 3 Haiku",
+    "description": "Chat dengan Claude 3 Haiku menggunakan bypass token DeepAI.",
+    "parameters": [
+      { "name": "ask", "in": "query", "required": true, "schema": { "type": "string" }, "example": "Apa itu kuantum fisika?" }
+    ],
+    "responses": {
+      "200": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": "Kuantum fisika adalah..."
+            }
+          }
+        }
+      }
+    }
+  }
+},
+    "/ai/deepseek": {
+      "get": {
+        "summary": "AI DeepSeek Chat",
+        "tags": ["AI"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" }, "description": "Pertanyaan untuk AI" }],
+        "responses": { "200": { "description": "Jawaban dari DeepSeek" } }
+      }
+    },
+    "/ai/notegpt": {
+      "get": {
+        "summary": "NoteGPT (GPT-4.1 Mini)",
+        "tags": ["AI"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "description": "Pertanyaan untuk AI", "schema": { "type": "string", "example": "Halo, siapa namamu?" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/ai/text2img": {
+      "get": {
+        "summary": "AI Text to Image",
+        "tags": ["AI"],
+        "parameters": [{ "name": "prompt", "in": "query", "required": true, "description": "Deskripsi gambar", "schema": { "type": "string", "example": "Cyberpunk city" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/ai/unblur": {
+      "get": {
+        "summary": "AI Photo Unblur (URL)",
+        "tags": ["AI"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "description": "URL gambar yang ingin di-unblur", "schema": { "type": "string", "format": "uri" } }],
+        "responses": { "200": { "description": "Success", "content": { "image/jpeg": {} } } }
+      }
+    },
+    "/ai/venice": {
+      "get": {
+        "summary": "Venice AI Chat",
+        "tags": ["AI"],
+        "parameters": [{ "name": "message", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/v1/ai/felo": {
+  "get": {
+    "summary": "Felo AI (Search Engine AI)",
+    "description": "AI yang mencari informasi secara real-time di internet dan menyertakan sumber referensi.",
+    "tags": ["AI"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Pertanyaan atau topik pencarian",
+        "schema": { "type": "string" },
+        "example": "berita terkini teknologi 2026"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Jawaban AI berhasil ditemukan",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "query": "...",
+                "answer": "Berdasarkan pencarian...",
+                "sources": [
+                  { "title": "Judul Berita", "url": "https://..." }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+    },
+    "/ai/writecream": {
+      "get": {
+        "summary": "WriteCream AI",
+        "tags": ["AI"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/ai/zonerai": {
+      "get": {
+        "summary": "AI Text to Image (Zonerai)",
+        "tags": ["AI"],
+        "parameters": [
+          { "name": "prompt", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "size", "in": "query", "required": false, "schema": { "type": "string", "default": "1024x1024", "enum": ["1024x1024", "1216x832", "1152x896", "1344x768", "1563x640", "832x1216", "896x1152", "768x1344", "640x1536"] } }
+        ],
+        "responses": { "200": { "description": "Image PNG" } }
+      }
+    },
+
+    "/anime/waifu": {
+      "get": {
+        "summary": "Random Waifu Image",
+        "tags": ["Anime"],
+        "responses": { "200": { "description": "Success", "content": { "image/png": {} } } }
+      }
+    },
+    "/anime/otakudesu-search": {
+      "get": {
+        "summary": "Search Anime Otakudesu",
+        "tags": ["Anime"],
+        "parameters": [{ "name": "query", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/anime/donghua-search": {
+      "get": {
+        "summary": "Search Donghua Film",
+        "tags": ["Anime"],
+        "parameters": [{ "name": "query", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v2/anime/donghub/search": {
+  "get": {
+    "tags": ["Anime"],
+    "summary": "Donghub Search",
+    "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }],
+    "responses": { "200": { "description": "OK" } }
+  }
+},
+"/v2/anime/donghub/detail": {
+  "get": {
+    "tags": ["Anime"],
+    "summary": "Donghub Detail",
+    "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+    "responses": { "200": { "description": "OK" } }
+  }
+},
+    "/anime/donghua-detail": {
+      "get": {
+        "summary": "Detail Donghua Film",
+        "tags": ["Anime"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/search/zerochan": {
+      "get": {
+        "summary": "Zerochan Image Search",
+        "tags": ["Anime"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/search/zerochan-detail": {
+      "get": {
+        "summary": "Zerochan Detail (HD)",
+        "tags": ["Anime"],
+        "parameters": [{ "name": "id", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v1/download/douyin": {
+  "get": {
+    "summary": "Douyin Downloader",
+    "description": "Download video Douyin (TikTok China) tanpa watermark dengan teknologi bypass sign SHA256.",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL video Douyin",
+        "schema": { "type": "string" },
+        "example": "https://www.douyin.com/video/7357714141391506688"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan link download",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "title": "Judul Video Douyin",
+                "thumbnail": "https://p16-sign.douyin.com/...",
+                "video": "https://video.seekin.ai/..."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+  "/v1/download/sfile-dl": {
+    "get": {
+      "summary": "Sfile Mobi Downloader",
+      "description": "Mendapatkan link download langsung (Direct Link) dan metadata lengkap dari Sfile.",
+      "tags": ["Downloader"],
+      "parameters": [
+        {
+          "name": "url",
+          "in": "query",
+          "required": true,
+          "description": "URL Sfile yang didapat dari hasil search",
+          "schema": { "type": "string" },
+          "example": "https://sfile.co/r0HAQUM8H4N"
+        }
+      ],
+      "responses": {
+        "200": { "description": "Link download berhasil di-generate" }
+      }
+    }
+  },
+"/v1/download/allinone": {
+  "get": {
+    "summary": "Universal Downloader Elite (V4)",
+    "description": "Downloader sakti yang mendukung berbagai platform (IG, FB, TikTok, YT, dll) dengan teknik enkripsi AES-256-CBC.",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL Video Sosmed apa saja",
+        "schema": { "type": "string" },
+        "example": "https://www.instagram.com/reel/C8W9HhSSTiL"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success get media data" }
+    }
+  }
+},
+    "/v1/download/gdrive": {
+  "get": {
+    "summary": "Google Drive Downloader",
+    "description": "Mendapatkan link download langsung dari URL Google Drive (Public).",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL Google Drive (Share Link)",
+        "schema": {
+          "type": "string",
+          "example": "https://drive.google.com/file/d/1xxxxxxx/view?usp=sharing"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan detail file",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "boolean" },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "fileName": { "type": "string" },
+                    "fileSize": { "type": "string" },
+                    "mimetype": { "type": "string" },
+                    "downloadUrl": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+
+"/v1/download/gitclone": {
+  "get": {
+    "summary": "GitHub Repository Downloader",
+    "description": "Download repository GitHub dalam bentuk file ZIP secara langsung.",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL Repository GitHub (contoh: https://github.com/Z7-zhen/theresa)",
+        "schema": {
+          "type": "string",
+          "example": "https://github.com/Z7-zhen/theresa"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan link download",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "boolean" },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "url": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "URL GitHub tidak valid" }
+    }
+  }
+},
+    "/v1/download/xv": {
+  "get": {
+    "summary": "Public Video Downloader (Xham/XV)",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "Video Link",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+    },
+    "/download/applemusic": {
+      "get": {
+        "summary": "Apple Music Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/capcut": {
+      "get": {
+        "summary": "CapCut Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string", "format": "uri" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/fbdown": {
+      "get": {
+        "summary": "Facebook Video Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/mediafire": {
+      "get": {
+        "summary": "Mediafire Downloader (JSON)",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/pinterest": {
+      "get": {
+        "summary": "Pinterest Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v1/download/tstiker": {
+  "get": {
+    "summary": "Telegram Sticker Downloader",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "Link atau nama pack stiker Telegram",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+    },
+    "/download/soundcloud": {
+      "get": {
+        "summary": "SoundCloud Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/spotify": {
+      "get": {
+        "summary": "Spotify Downloader (Biner)",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "File MP3" } }
+      }
+    },
+    "/download/terabox": {
+      "get": {
+        "summary": "Terabox Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/tiktok": {
+      "get": {
+        "summary": "TikTok Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string", "format": "uri" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/videy": {
+      "get": {
+        "summary": "Videy.co Video Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/download/xnxx": {
+      "get": {
+        "summary": "Xnxx Video Downloader",
+        "tags": ["Downloader"],
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "quality", "in": "query", "schema": { "type": "string", "enum": ["high", "low"] } }
+        ],
+        "responses": { "200": { "description": "Video MP4" } }
+      }
+    },
+    "/download/ytmp3": {
+      "get": {
+        "summary": "YouTube MP3 Downloader",
+        "tags": ["Downloader"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+"/v2/download/ytmp4": {
+  "get": {
+    "summary": "YouTube MP4 Downloader",
+    "description": "Versi cepat. Cukup masukkan link, sistem otomatis memberikan kualitas video terbaik.",
+    "tags": ["Downloader"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "Link Video YouTube",
+        "schema": { "type": "string" },
+        "example": "https://youtu.be/WVl0eohFnhc"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Gacor!" }
+    }
+  }
+},
+    "/v1/canvas/iqc": {
+  "get": {
+    "summary": "iPhone Quote (IQC)",
+    "description": "Bikin quote estetik ala iPhone secara instan. Jam disesuaikan otomatis ke WIB dan baterai di-random biar makin real.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "teks",
+        "in": "query",
+        "required": true,
+        "description": "Isi pesan disini",
+        "schema": { "type": "string" },
+        "example": "Kalo orang lain bisa, kenapa harus saya? 🗿"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil generate gambar PNG",
+        "content": {
+          "image/png": {}
+        }
+      }
+    }
+  }
+    },
+"/v1/maker/tfdana": {
+  "get": {
+    "summary": "DANA Transfer Receipt Generator",
+    "description": "Membuat struk bukti transfer DANA palsu (mockup) dengan data pengirim, tujuan, dan nominal kustom.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "namaPengirim",
+        "in": "query",
+        "required": true,
+        "description": "Nama pengirim (untuk internal log/opsional di visual)",
+        "schema": { "type": "string" },
+        "example": "Budi Santoso"
+      },
+      {
+        "name": "noHpPengirim",
+        "in": "query",
+        "required": true,
+        "description": "Nomor HP pengirim (akan disensor otomatis di tengah)",
+        "schema": { "type": "string" },
+        "example": "081234567890"
+      },
+      {
+        "name": "namaTujuan",
+        "in": "query",
+        "required": true,
+        "description": "Nama penerima transfer",
+        "schema": { "type": "string" },
+        "example": "Siti Aminah"
+      },
+      {
+        "name": "noHpTujuan",
+        "in": "query",
+        "required": true,
+        "description": "Nomor HP tujuan",
+        "schema": { "type": "string" },
+        "example": "085712345678"
+      },
+      {
+        "name": "nominal",
+        "in": "query",
+        "required": true,
+        "description": "Jumlah nominal transfer (angka saja)",
+        "schema": { "type": "string" },
+        "example": "50000"
+      },
+      {
+        "name": "timezone",
+        "in": "query",
+        "required": true,
+        "description": "Zona waktu: WIB, WITA, atau WIT",
+        "schema": { 
+          "type": "string",
+          "enum": ["WIB", "WITA", "WIT"]
+        },
+        "example": "WIB"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil membuat gambar struk DANA",
+        "content": {
+          "image/png": {}
+        }
+      },
+      "400": { "description": "Parameter tidak lengkap" },
+      "500": { "description": "Internal Server Error / Gagal memproses gambar" }
+    }
+  }
+},
+    "/v1/maker/tohitam": {
+  "get": {
+    "summary": "AI Skin Darkener",
+    "description": "Transformasi warna kulit menjadi Deep/Dark secara natural. Output: Image Buffer.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar sumber",
+        "schema": { "type": "string" },
+        "example": "https://files.catbox.moe/x4o7xs.jpg"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil memproses gambar",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+"/v1/maker/toputih": {
+  "get": {
+    "summary": "AI Skin Whitening",
+    "description": "Mengubah warna kulit menjadi cerah/putih porselen. Output: Image Buffer.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar sumber",
+        "schema": { "type": "string" },
+        "example": "https://files.catbox.moe/x4o7xs.jpg"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil memproses gambar",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+"/v1/maker/tobotak": {
+  "get": {
+    "summary": "AI Bald Generator",
+    "description": "Menghapus rambut dan menciptakan kepala botak realistis. Output: Image Buffer.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar sumber",
+        "schema": { "type": "string" },
+        "example": "https://files.catbox.moe/x4o7xs.jpg"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil memproses gambar",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+"/v1/maker/tokacamata": {
+  "get": {
+    "summary": "AI Face Glasses",
+    "description": "Menambahkan kacamata pada wajah subjek secara presisi. Output: Image Buffer.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar sumber",
+        "schema": { "type": "string" },
+        "example": "https://files.catbox.moe/x4o7xs.jpg"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil memproses gambar",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+"/v1/maker/toemas": {
+  "get": {
+    "summary": "AI Golden Effect",
+    "description": "Mengubah subjek menjadi patung emas mewah. Output: Image Buffer.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar sumber",
+        "schema": { "type": "string" },
+        "example": "https://files.catbox.moe/x4o7xs.jpg"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil memproses gambar",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+"/v1/maker/tomasker": {
+  "get": {
+    "summary": "AI Mask Addon",
+    "description": "Memasangkan masker medis pada wajah secara otomatis. Output: Image Buffer.",
+    "tags": ["Maker"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar sumber",
+        "schema": { "type": "string" },
+        "example": "https://files.catbox.moe/x4o7xs.jpg"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil memproses gambar",
+        "content": { "image/jpeg": {} }
+      }
+    }
+  }
+},
+    "/image/bluearchive": {
+      "get": {
+        "summary": "Blue Archive",
+        "tags": ["Image"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/image/loli": {
+      "get": {
+        "summary": "Loli",
+        "tags": ["Image"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/image/mpls": {
+      "get": {
+        "summary": "Mpls Generator",
+        "tags": ["Image"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string", "format": "uri" } }],
+        "responses": { "200": { "description": "Image PNG" } }
+      }
+    },
+    "/image/testimaker": {
+      "get": {
+        "summary": "Testi Maker",
+        "tags": ["Image"],
+        "parameters": [
+          { "name": "img1", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "img2", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "store", "in": "query", "schema": { "type": "string" } },
+          { "name": "wa", "in": "query", "schema": { "type": "string" } },
+          { "name": "tele", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Image PNG" } }
+      }
+    },
+      "/v1/stalk/teleid": {
+      "get": {
+        "tags": ["Stalk"],
+        "summary": "Telegram Stalker",
+        "description": "Mencari ID via OSINT Database.",
+        "parameters": [
+          { "name": "username", "in": "query", "required": true, "schema": { "type": "string" }, "example": "shannz" }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+"/v1/stalk/ig": {
+  "get": {
+    "summary": "Instagram Profile Stalker",
+    "tags": ["Stalk"],
+    "parameters": [
+      {
+        "name": "username",
+        "in": "query",
+        "required": true,
+        "description": "Username Instagram target",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+},
+"/v1/stalk/discord": {
+  "get": {
+    "summary": "Discord User Lookup",
+    "tags": ["Stalk"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "query",
+        "required": true,
+        "description": "User ID Discord (Contoh: 1355400581027729428)",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+},
+"/v1/stalk/twitter": {
+  "get": {
+    "summary": "Twitter Profile Stalker",
+    "tags": ["Stalk"],
+    "parameters": [
+      {
+        "name": "username",
+        "in": "query",
+        "required": true,
+        "description": "Username Twitter (Tanpa @)",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+},
+    "/stalk/genshin": {
+      "get": {
+        "summary": "Genshin Impact Player Stalker",
+        "tags": ["Stalk"],
+        "parameters": [{ "name": "uid", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/stalk/gsmarena": {
+      "get": {
+        "summary": "GSMArena Search",
+        "tags": ["Stalk"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/stalk/tiktok": {
+      "get": {
+        "summary": "TikTok Stalker",
+        "tags": ["Stalk"],
+        "parameters": [{ "name": "username", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/stalk/tiktok-v2": {
+      "get": {
+        "summary": "TikTok Stalker V2 (Direct)",
+        "tags": ["Stalk"],
+        "parameters": [{ "name": "username", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+
+    "/tempmail/tempmail": {
+      "get": {
+        "summary": "Generate Mail V2",
+        "tags": ["Tempmail"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/tools/bahlil": {
+      "get": {
+        "summary": "Meme Generator (Bahlil)",
+        "tags": ["Tools"],
+        "parameters": [{ "name": "text", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Meme Image" } }
+      }
+    },
+    "/tools/ff-karakter": {
+      "get": {
+        "summary": "FF Character List Tool",
+        "tags": ["Tools"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v1/tools/upscale": {
+  "get": {
+    "summary": "AI Image Upscaler (HDR)",
+    "description": "Meningkatkan kualitas gambar (HDR) dan resolusi secara otomatis. Output langsung berupa file gambar PNG.",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "url",
+        "in": "query",
+        "required": true,
+        "description": "URL gambar yang ingin dijernihkan (harus link langsung ke file gambar)",
+        "schema": {
+          "type": "string",
+          "example": "https://telegra.ph/file/your-image-id.jpg"
+        }
+      },
+      {
+        "name": "scale",
+        "in": "query",
+        "description": "Skala perbesaran (pilih: 2, 4, 6, 8, 16)",
+        "schema": {
+          "type": "integer",
+          "enum": [2, 4, 6, 8, 16],
+          "default": 2
+        }
+      },
+      {
+        "name": "anime",
+        "in": "query",
+        "description": "Set 'true' jika gambar adalah kartun/anime, 'false' jika foto real/manusia",
+        "schema": {
+          "type": "string",
+          "enum": ["true", "false"],
+          "default": "false"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil menjernihkan gambar",
+        "content": {
+          "image/png": {
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Parameter tidak lengkap atau salah"
+      },
+      "500": {
+        "description": "Terjadi kesalahan pada server AI"
+      }
+    }
+  }
+},
+    "/v1/tools/kbbi": {
+  "get": {
+    "summary": "KBBI Dictionary",
+    "description": "Mencari definisi kata baku dalam Kamus Besar Bahasa Indonesia (KBBI).",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "kata",
+        "in": "query",
+        "required": true,
+        "description": "Kata yang ingin dicari definisinya",
+        "schema": { "type": "string" },
+        "example": "gadget"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan definisi kata",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "kata": "gadget",
+                "definisi": "gadget /gadjét/ n peranti elektronik atau mekanik dengan fungsi praktis; gawai"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+    "/v1/tools/github": {
+  "get": {
+    "summary": "GitHub Search & Download",
+    "description": "Cari repository GitHub atau masukkan link repo untuk mendapatkan info detail dan link download ZIP.",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Nama repo (misal: 'TechBOT') atau Link Repo GitHub",
+        "schema": { "type": "string" },
+        "example": "https://github.com/nlef/moonraker-telegram-bot"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success get github data" }
+    }
+  }
+},
+"/v1/tools/chord": {
+  "get": {
+    "summary": "Guitar Chord & Lyrics Finder",
+    "description": "Cari chord gitar dan lirik lagu favoritmu. Masukkan judul lagu untuk mencari, atau masukkan link Gitagram untuk melihat detail chord.",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Judul lagu (misal: 'Duka') atau Link Gitagram",
+        "schema": { "type": "string" },
+        "example": "Last Child Duka"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Berhasil mendapatkan data chord" }
+    }
+  }
+},
+"/v1/tools/random-ascii": {
+  "get": {
+    "summary": "Random ASCII Generator",
+    "description": "Menghasilkan string ASCII acak dengan panjang dan jumlah tertentu (via Puppeteer).",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "length",
+        "in": "query",
+        "description": "Panjang karakter per baris",
+        "schema": { "type": "integer", "default": 16 }
+      },
+      {
+        "name": "count",
+        "in": "query",
+        "description": "Jumlah baris yang dihasilkan",
+        "schema": { "type": "integer", "default": 1 }
+      },
+      {
+        "name": "charset",
+        "in": "query",
+        "description": "Jenis karakter (alphalc, alphanumeric, printable, dll)",
+        "schema": { "type": "string", "default": "alphanumeric" }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "ASCII Berhasil digenerate",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": "aB3dE5fG..."
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/v1/tools/hari-penting": {
+  "get": {
+    "summary": "Daftar Hari Penting Indonesia",
+    "description": "Menampilkan daftar lengkap hari penting, hari nasional, dan peringatan besar di Indonesia yang bersumber dari Wikipedia.",
+    "tags": ["Tools"],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan data hari penting",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "total_data": 446,
+              "result": [
+                {
+                  "tanggal": "1 Januari",
+                  "event": "Tahun baru Masehi"
+                },
+                {
+                  "tanggal": "17 Agustus",
+                  "event": "Hari Proklamasi Kemerdekaan Republik Indonesia"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+},
+    "/tools/ocr": {
+      "get": {
+        "summary": "Image to Text (OCR)",
+        "tags": ["Tools"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/tools/ssweb": {
+      "get": {
+        "summary": "Screenshot Website (Biner)",
+        "tags": ["Tools"],
+        "parameters": [{ "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Screenshot Image" } }
+      }
+    },
+    "/tools/text-replace": {
+      "get": {
+        "summary": "AI Text Replace",
+        "tags": ["Tools"],
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "find", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "replace", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/tools/translate": {
+      "get": {
+        "summary": "Google Translate",
+        "tags": ["Tools"],
+        "parameters": [
+          { "name": "text", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "to", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/tools/undress": {
+      "get": {
+        "summary": "AI Image Alter (Restricted)",
+        "tags": ["Tools"],
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "token", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v1/tools/planet": {
+  "get": {
+    "summary": "Full Solar System Info (Image)",
+    "tags": ["Tools"],
+    "parameters": [
+      {
+        "name": "name",
+        "in": "query",
+        "required": true,
+        "description": "Nama planet (bumi, mars, matahari, pluto, dll)",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "PNG Image" }
+    }
+  }
+    },
+    "/search/applemusic": {
+      "get": {
+        "summary": "Apple Music Search",
+        "tags": ["Search"],
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" } },
+          { "name": "region", "in": "query", "required": false, "schema": { "type": "string", "default": "id" } }
+        ],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/v1/search/buildml": {
+      "get": {
+        "tags": ["Search"],
+        "summary": "MLBB Hero Build",
+        "parameters": [
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" }, "example": "ling" }
+        ],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/search/play-v2": {
+      "get": {
+        "summary": "Music Player (Biner)",
+        "tags": ["Search"],
+        "parameters": [{ "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Audio MP3" } }
+      }
+    },
+"/v1/search/sfile-search": {
+  "get": {
+    "summary": "Sfile Fast Search",
+    "description": "Cari file di sfile.co secara instan hanya dengan kata kunci.",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci (Contoh: Lagu Galau, Mod APK)",
+        "schema": { "type": "string" },
+        "example": "WhatsApp Mod"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success get search results" }
+    }
+  }
+},
+"/v1/search/movieku": {
+  "get": {
+    "summary": "MovieKu Search & Info",
+    "description": "Cari film dan dapatkan info detail beserta link download dari MovieKu. Output otomatis mengambil detail hasil pertama.",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci judul film",
+        "schema": { "type": "string" },
+        "example": "Spider-Man"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan data",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "search_results": [],
+                "top_detail": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+
+    "/v1/search/manga": {
+  "get": {
+    "summary": "Manga & Manhwa Search Scraper",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Judul komik (misal: 'Overgeared')",
+        "schema": { "type": "string" }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "description": "Halaman ke-berapa",
+        "schema": { "type": "integer", "default": 1 }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success get manga list from CosmicScans" }
+    }
+  }
+    },
+    "/search/spotify": {
+  "get": {
+    "summary": "Spotify Search",
+    "description": "Mencari lagu di Spotify secara real-time langsung dari pusat (Bypass Access Token).",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Nama lagu / artis",
+        "schema": { "type": "string" },
+        "example": "Batas Senja"
+      },
+      {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "description": "Jumlah hasil (max 50)",
+        "schema": { "type": "integer", "default": 10 }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Berhasil mendapatkan list lagu",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": [
+                {
+                  "title": "Nanti Kita Seperti Ini",
+                  "artist": "Batas Senja",
+                  "album": "Nanti Kita Seperti Ini",
+                  "duration": "4:15",
+                  "trackUrl": "https://open.spotify.com/track/..."
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+    },
+    "/v1/info/loker": {
+  "get": {
+    "summary": "Job Search (JobStreet)",
+    "description": "Mencari lowongan kerja terbaru berdasarkan posisi dan lokasi di Indonesia.",
+    "tags": ["Search"],
+    "parameters": [
+      { "name": "q", "in": "query", "required": true, "description": "Nama Pekerjaan", "schema": { "type": "string" }, "example": "admin" },
+      { "name": "loc", "in": "query", "required": true, "description": "Lokasi/Kota", "schema": { "type": "string" }, "example": "Bandung" },
+      { "name": "limit", "in": "query", "description": "Jumlah hasil", "schema": { "type": "integer", "default": 5 } }
+    ],
+    "responses": {
+      "200": {
+        "description": "Daftar loker ditemukan",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "search": { "q": "admin", "loc": "Bandung", "total_found": 5 },
+                "jobs": [
+                  {
+                    "title": "Admin Gudang",
+                    "company": "PT Maju Mundur",
+                    "location": "Bandung",
+                    "salary": "IDR 4.000.000 - 5.000.000",
+                    "link": "https://id.jobstreet.com/job/..."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+    "/v1/search/pinterest": {
+  "get": {
+    "summary": "Pinterest Image Search",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci gambar",
+        "schema": { "type": "string" },
+        "example": "cyberpunk city"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success get image list" }
+    }
+  }
+    },
+    "/v1/search/ytplay": {
+  "get": {
+    "summary": "YouTube Audio Player & Downloader",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "text",
+        "in": "query",
+        "required": true,
+        "description": "Judul lagu atau kata kunci",
+        "schema": { "type": "string" },
+        "example": "kau masih kekasihku"
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success get audio metadata and download link" }
+    }
+  }
+    },
+    "/v1/search/soundcloud": {
+  "get": {
+    "summary": "SoundCloud Search",
+    "description": "Mencari lagu di SoundCloud secara real-time. Menampilkan judul, artis, link track, dan thumbnail HD (500x500).",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "q",
+        "in": "query",
+        "required": true,
+        "description": "Kata kunci pencarian lagu",
+        "schema": { "type": "string" },
+        "example": "Lathi Weird Genius"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Data berhasil ditarik dari SoundCloud",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "boolean" },
+                "creator": { "type": "string" },
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": { "type": "string" },
+                      "artist": { "type": "string" },
+                      "thumbnail": { "type": "string" },
+                      "url": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/v1/search/xv": {
+  "get": {
+    "summary": "Private Video Search",
+    "tags": ["Search"],
+    "parameters": [
+      {
+        "name": "query",
+        "in": "query",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      {
+        "name": "apikey",
+        "in": "query",
+        "required": true,
+        "description": "Gunakan key rahasia",
+        "schema": { "type": "string" }
+      }
+    ],
+    "responses": {
+      "200": { "description": "Success" }
+    }
+  }
+},
+    "/v1/religi/quran": {
+  "get": {
+    "summary": "List Semua Surah",
+    "description": "Mengambil daftar 114 surah dari Al-Qur'an NU Online.",
+    "tags": ["Religi"],
+    "responses": {
+      "200": {
+        "description": "Daftar surah berhasil diambil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": [{ "no": 1, "title": "Al-Fatihah", "id": "al-fatihah" }]
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/pterodactyl/statuspanel": {
+  "get": {
+    "tags": ["Pterodactyl"],
+    "summary": "Pterodactyl API Checker",
+    "description": "Mengecek validitas API Key Pterodactyl dan mendeteksi apakah memiliki akses Admin atau Client.",
+    "parameters": [
+      { "name": "domain", "in": "query", "required": true, "description": "URL Panel (Contoh: panel.asoy.com)", "schema": { "type": "string" } },
+      { "name": "apikeyptero", "in": "query", "required": true, "description": "Ptero API Key (ptla/ptlc)", "schema": { "type": "string" } }
+    ],
+    "responses": {
+      "200": {
+        "description": "Status API Terdeteksi",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "message": "API Terdeteksi dan memiliki kontrol penuh.",
+              "admin": true
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/pterodactyl/createadmin": {
+  "get": {
+    "tags": ["Pterodactyl"],
+    "summary": "Pterodactyl Admin Creator",
+    "description": "Membuat user dengan akses Root Admin pada panel Pterodactyl menggunakan API Application.",
+    "parameters": [
+      { "name": "domain", "in": "query", "required": true, "schema": { "type": "string" }, "example": "panel.asoy.com" },
+      { "name": "apikeyptero", "in": "query", "required": true, "description": "Application API Key", "schema": { "type": "string" } },
+      { "name": "nameuser", "in": "query", "required": true, "schema": { "type": "string" }, "example": "adminpro" },
+      { "name": "password", "in": "query", "description": "Password custom (opsional)", "schema": { "type": "string" } }
+    ],
+    "responses": {
+      "200": {
+        "description": "Admin berhasil dibuat",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": {
+                "username": "adminpro",
+                "password": "...",
+                "is_root": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/pterodactyl/create": {
+  "get": {
+    "tags": ["Pterodactyl"],
+    "summary": "Ptero User & Server Creator",
+    "description": "Membuat user sekaligus server Node.js 18 dalam satu kali request API.",
+    "parameters": [
+      { "name": "domain", "in": "query", "required": true, "schema": { "type": "string" } },
+      { "name": "apikeyptero", "in": "query", "required": true, "description": "PTLA Key", "schema": { "type": "string" } },
+      { "name": "nameserver", "in": "query", "required": true, "schema": { "type": "string" } },
+      { "name": "disk", "in": "query", "required": true, "description": "MB (ex: 1024)", "schema": { "type": "integer" } },
+      { "name": "cpu", "in": "query", "required": true, "description": "% (ex: 100)", "schema": { "type": "integer" } },
+      { "name": "password", "in": "query", "required": true, "schema": { "type": "string" } },
+      { "name": "rootadmin", "in": "query", "description": "true/false", "schema": { "type": "string" } }
+    ],
+    "responses": {
+      "200": {
+        "description": "Server Ready",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "result": { "user": { "username": "...", "password": "..." }, "server": { "id": 123 } }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/pterodactyl/deleteadmin": {
+  "get": {
+    "tags": ["Pterodactyl"],
+    "summary": "Force Delete Admin & Servers",
+    "description": "Menghapus akun admin beserta seluruh server yang dikelolanya secara permanen.",
+    "parameters": [
+      { "name": "userid", "in": "query", "required": true, "description": "ID User yang akan dihapus", "schema": { "type": "integer" } },
+      { "name": "domain", "in": "query", "required": true, "schema": { "type": "string" } },
+      { "name": "apikeyptero", "in": "query", "required": true, "description": "PTLA Key", "schema": { "type": "string" } }
+    ],
+    "responses": {
+      "200": {
+        "description": "Wipe Out Berhasil",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "message": "Force Delete Berhasil!",
+              "result": { "total_servers_wiped": 3 }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/pterodactyl/deleteallserver": {
+  "get": {
+    "tags": ["Tools"],
+    "summary": "Delete All Servers",
+    "description": "Menghapus seluruh server di panel Pterodactyl secara massal dengan fitur pengecualian ID.",
+    "parameters": [
+      { "name": "domain", "in": "query", "required": true, "schema": { "type": "string" } },
+      { "name": "apikeyptero", "in": "query", "required": true, "description": "PTLA Key", "schema": { "type": "string" } },
+      { "name": "pengecualian", "in": "query", "description": "ID Server dipisah koma (ex: 12,15)", "schema": { "type": "string" } },
+      { "name": "preview", "in": "query", "description": "Set 'true' untuk simulasi tanpa menghapus", "schema": { "type": "string" } }
+    ],
+    "responses": {
+      "200": {
+        "description": "Proses selesai",
+        "content": {
+          "application/json": {
+            "example": {
+              "status": true,
+              "creator": "D2:业",
+              "mode": "MASS_DELETE_EXECUTION",
+              "result": { "total_found": 100, "ignored_count": 2 }
+            }
+          }
+        }
+      }
+    }
+  }
+},
+"/pterodactyl/deletealluser": {
+  "get": {
+    "tags": ["Pterodactyl"],
+    "summary": "Delete All Users",
+    "description": "Menghapus seluruh akun non-admin di panel secara massal. Akun Root Admin otomatis dilindungi.",
+    "parameters": [
+      { "name": "domain", "in": "query", "required": true, "schema": { "type": "string" } },
+      { "name": "apikeyptero", "in": "query", "required": true, "description": "PTLA Key", "schema": { "type": "string" } },
+      { "name": "preview", "in": "query", "description": "Set 'true' untuk melihat daftar target", "schema": { "type": "string" } }
+    ],
+    "responses": {
+      "200": { "description": "Wipe User Selesai" }
+    }
+  }
+},
+
+    "/news/detik": {
+      "get": {
+        "summary": "Detik News",
+        "tags": ["News"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    },
+    "/news/kontan": {
+      "get": {
+        "summary": "Kontan News",
+        "tags": ["News"],
+        "responses": { "200": { "description": "Success" } }
+      }
+    }
+  }
+}
