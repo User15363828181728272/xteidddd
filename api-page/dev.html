@@ -212,21 +212,6 @@
         const clock = document.getElementById('clock');
         const year = document.getElementById('year');
 
-(function () {
-    const allowed = [
-        "/",
-        "/docs",
-        "/dev",
-        "/nt"
-    ];
-
-    const path = window.location.pathname.replace(/\/+$/, "") || "/";
-
-    if (!allowed.includes(path)) {
-        window.location.replace("/nt");
-    }
-})();   
-
         const toggleMenu = (isOpen) => {
             sideMenu.style.transform = isOpen ? 'translateX(0)' : 'translateX(120%)';
             overlay.style.opacity = isOpen ? '1' : '0';
@@ -252,7 +237,7 @@
 
         async function fetchStats() {
             try {
-                const res = await fetch('src/schema.json');
+                const res = await fetch('src/openapi.json');
                 const data = await res.json();
                 let count = 0;
                 if(data.paths) {
