@@ -11,7 +11,6 @@
 <title>XTE APIS</title>
 <link rel="icon" href="src/icon.jpg">
 
-<!-- Open Graph -->
 <meta property="og:site_name" content="XTE APIS">
 <meta property="og:title" content="XTE APIS">
 <meta property="og:description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
@@ -23,7 +22,6 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="XTE APIS">
 <meta name="twitter:description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
@@ -94,10 +92,10 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-.api-header.active i {
-    transform: rotate(180deg);
-    transition: 0.3s;
-}
+        .api-header.active i {
+            transform: rotate(180deg);
+            transition: 0.3s;
+        }
 
         .search-container {
             flex: 1;
@@ -126,20 +124,19 @@
             transition: 0.3s;
         }
 
-/* Loading animation */
-.loader {
-    width: 28px;
-    height: 28px;
-    border: 3px solid rgba(255,255,255,0.15);
-    border-top: 3px solid #00ffe7;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin: 20px auto;
-}
+        .loader {
+            width: 28px;
+            height: 28px;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top: 3px solid #00ffe7;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 20px auto;
+        }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
         .search-container input:focus { border-color: var(--primary); background: #FFFFFF; }
 
@@ -190,8 +187,6 @@
         .hero {
             padding: 140px 24px 40px;
             text-align: center;
-            background: radial-gradient(circle at top right, rgba(255,95,0,0.05), transparent),
-                        radial-gradient(circle at bottom left, rgba(255,95,0,0.05), transparent);
         }
 
         .hero-img {
@@ -256,15 +251,17 @@
 
         .console-section { padding: 30px; background: #F1F5F9; }
         .code-window { background: #0F172A; border-radius: 16px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .code-header { background: #1E293B; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
-        .dots { display: flex; gap: 6px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot-1 { background: #FF5F56; }
-        .dot-2 { background: #FFBD2E; }
-        .dot-3 { background: #27C93F; }
+        .code-header { background: #1E293B; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+        .code-tabs { display: flex; gap: 10px; }
+        .code-tab { font-size: 10px; font-weight: 800; color: #94A3B8; cursor: pointer; padding: 4px 8px; border-radius: 4px; background: transparent; transition: 0.2s; border: none; }
+        .code-tab.active { background: var(--primary); color: white; }
 
         .code-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #94A3B8; max-height: 350px; overflow-y: auto; position: relative; }
-        .copy-pill { background: var(--primary); color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; border: none; }
+        .code-actions { display: flex; gap: 6px; }
+        .copy-pill { background: rgba(255,255,255,0.1); color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; border: none; transition: 0.2s; }
+        .copy-pill:hover { background: var(--primary); }
+        .visit-pill { background: #27C93F; color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; border: none; text-decoration: none; display: inline-flex; align-items: center; }
+        
         pre { white-space: pre-wrap; word-break: break-all; color: #4ADE80; }
 
         .side-panel { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.1); backdrop-filter: blur(10px); z-index: 2000; opacity: 0; visibility: hidden; transition: 0.4s; }
@@ -277,8 +274,6 @@
 
         .notification { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(150px); background: #0F172A; color: #FFFFFF; padding: 14px 28px; border-radius: 100px; display: flex; align-items: center; gap: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 9999; transition: 0.6s var(--ease); }
         .notification.active { transform: translateX(-50%) translateY(0); }
-        
-        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
     </style>
 </head>
 <body>
@@ -343,7 +338,6 @@ const apiSearch = document.getElementById('apiSearch');
 const searchResults = document.getElementById('searchResults');
 
 let apiDataStore = [];
-let endpoints = {};
 let searchTimer;
 
 openMenu.onclick = () => sidePanel.classList.add('active');
@@ -366,12 +360,9 @@ function toggleApi(id){
     const el = document.getElementById(`details-${id}`);
     const card = document.getElementById(`card-${id}`);
     const header = card.querySelector('.api-header');
-
     const isActive = el.classList.contains('active');
-
     document.querySelectorAll('.api-details').forEach(d=>d.classList.remove('active'));
     document.querySelectorAll('.api-header').forEach(h=>h.classList.remove('active'));
-
     if(!isActive){
         el.classList.add('active');
         header.classList.add('active');
@@ -380,60 +371,67 @@ function toggleApi(id){
     }
 }
 
-function buildQuery(fd){
+function buildUrl(path, formId){
+    const form = document.getElementById(formId);
+    const fd = new FormData(form);
     const p = new URLSearchParams();
     for(let [k,v] of fd.entries()) if(v) p.append(k,v);
-    return p;
+    let url = BASE_URL + path;
+    if(p.toString()) url += "?" + p.toString();
+    return url;
 }
 
-function updateCurl(id, method, path){
-    const form = document.getElementById(`form-${id}`);
-    const curlDisplay = document.getElementById(`curl-${id}`);
-    const fd = new FormData(form);
-    const p = buildQuery(fd);
+function switchTab(id, lang, method, path){
+    const url = buildUrl(path, `form-${id}`);
+    const display = document.getElementById(`code-${id}`);
+    const tabs = document.querySelectorAll(`#tabs-${id} .code-tab`);
+    tabs.forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
 
-    let url = BASE_URL + path;
-    if(method === "GET" && p.toString()) url += "?" + p.toString();
+    if(lang === 'curl'){
+        display.textContent = `curl -X ${method} "${url}"`;
+    } else if(lang === 'python'){
+        display.textContent = `import requests\n\nurl = "${url}"\nresponse = requests.get(url)\nprint(response.json())`;
+    } else if(lang === 'javascript'){
+        display.textContent = `fetch("${url}")\n  .then(res => res.json())\n  .then(data => console.log(data));`;
+    }
+}
 
-    curlDisplay.textContent = `curl -X ${method} "${url}"`;
+function updateSnippets(id, method, path){
+    const url = buildUrl(path, `form-${id}`);
+    const activeTab = document.querySelector(`#tabs-${id} .code-tab.active`).textContent.toLowerCase();
+    const display = document.getElementById(`code-${id}`);
+    const visitBtn = document.getElementById(`visit-${id}`);
+    visitBtn.href = url;
+
+    if(activeTab === 'curl') display.textContent = `curl -X ${method} "${url}"`;
+    else if(activeTab === 'python') display.textContent = `import requests\n\nurl = "${url}"\nresponse = requests.get(url)\nprint(response.json())`;
+    else if(activeTab === 'js') display.textContent = `fetch("${url}")\n  .then(res => res.json())\n  .then(data => console.log(data));`;
 }
 
 async function runRequest(id, method, path){
     const btn = document.getElementById(`btn-${id}`);
     const pre = document.getElementById(`res-${id}`);
-
     btn.textContent = "LOADING...";
     btn.disabled = true;
     pre.innerHTML = `<div class="loader"></div>`;
-
-    const form = document.getElementById(`form-${id}`);
-    const fd = new FormData(form);
-    const p = buildQuery(fd);
-
-    let url = BASE_URL + path;
-    if(method === "GET" && p.toString()) url += "?" + p.toString();
+    const url = buildUrl(path, `form-${id}`);
 
     try{
         const res = await fetch(url,{method});
         const type = res.headers.get("content-type") || "";
-
         if(type.includes("image")){
             const blob = await res.blob();
             pre.innerHTML = `<img src="${URL.createObjectURL(blob)}" style="max-width:100%;border-radius:12px;margin-top:10px;">`;
-        }
-        else if(type.includes("application/json")){
+        } else if(type.includes("application/json")){
             const json = await res.json();
             pre.textContent = JSON.stringify(json,null,2);
+        } else {
+            pre.textContent = await res.text();
         }
-        else{
-            const text = await res.text();
-            pre.textContent = text;
-        }
-    }
-    catch(e){
-        pre.textContent = "// Error: " + e.message;
-    }
-    finally{
+    } catch(e){
+        pre.textContent = "Error: " + e.message;
+    } finally {
         btn.textContent = "EXECUTE";
         btn.disabled = false;
     }
@@ -442,7 +440,6 @@ async function runRequest(id, method, path){
 function filterByTag(tag){
     document.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
     if(tag==='all') document.getElementById('btn-all')?.classList.add('active');
-
     document.querySelectorAll('.api-card').forEach(el=>{
         el.style.display = (tag==='all'||el.dataset.tag===tag)?'block':'none';
     });
@@ -456,12 +453,7 @@ apiSearch.oninput = ()=>{
 function runSearch(){
     const val = apiSearch.value.toLowerCase();
     if(!val){ searchResults.style.display='none'; return; }
-
-    const matches = apiDataStore.filter(item =>
-        item.path.toLowerCase().includes(val) ||
-        (item.info.summary && item.info.summary.toLowerCase().includes(val))
-    );
-
+    const matches = apiDataStore.filter(item => item.path.toLowerCase().includes(val));
     if(matches.length){
         searchResults.innerHTML = matches.map(m=>`
             <div class="search-item" onclick="selectSearch(${m.id})">
@@ -480,20 +472,12 @@ function selectSearch(id){
     toggleApi(id);
 }
 
-document.addEventListener('click',(e)=>{
-    if(!apiSearch.contains(e.target)&&!searchResults.contains(e.target)){
-        searchResults.style.display='none';
-    }
-});
-
 async function loadSchema(){
     const container = document.getElementById('apiContainer');
     const catRow = document.getElementById('catRow');
-
     try{
         const r = await fetch('src/openapi.json');
         const data = await r.json();
-
         const tags = new Set();
         let html='';
         let idx=0;
@@ -503,7 +487,6 @@ async function loadSchema(){
                 const id = idx++;
                 const tag = info.tags?.[0] || 'General';
                 const m = method.toUpperCase();
-
                 tags.add(tag);
                 apiDataStore.push({id,path,method,info,tag});
 
@@ -521,8 +504,7 @@ async function loadSchema(){
                                     ${(info.parameters||[]).map(p=>`
                                         <div class="field-group">
                                             <label>${p.name} ${p.required?'<span style="color:var(--primary)">*</span>':''}</label>
-                                            <input type="text" name="${p.name}" placeholder="${p.description||''}"
-                                            oninput="updateCurl(${id},'${m}','${path}')">
+                                            <input type="text" name="${p.name}" placeholder="${p.description||''}" oninput="updateSnippets(${id},'${m}','${path}')">
                                         </div>
                                     `).join('')}
                                     <button class="btn-exec" id="btn-${id}" onclick="runRequest(${id},'${m}','${path}')">EXECUTE</button>
@@ -531,18 +513,27 @@ async function loadSchema(){
                             <div class="console-section">
                                 <div class="code-window">
                                     <div class="code-header">
-                                        <button class="copy-pill" onclick="copyToClipboard('curl-${id}')">CURL</button>
+                                        <div class="code-tabs" id="tabs-${id}">
+                                            <button class="code-tab active" onclick="switchTab(${id},'curl','${m}','${path}')">CURL</button>
+                                            <button class="code-tab" onclick="switchTab(${id},'python','${m}','${path}')">PYTHON</button>
+                                            <button class="code-tab" onclick="switchTab(${id},'javascript','${m}','${path}')">JS</button>
+                                        </div>
+                                        <div class="code-actions">
+                                            <a href="${BASE_URL}${path}" target="_blank" class="visit-pill" id="visit-${id}">RAW</a>
+                                            <button class="copy-pill" onclick="copyToClipboard('code-${id}')">COPY</button>
+                                        </div>
                                     </div>
                                     <div class="code-body">
-                                        <pre id="curl-${id}">curl -X ${m} "${BASE_URL}${path}"</pre>
+                                        <pre id="code-${id}">curl -X ${m} "${BASE_URL}${path}"</pre>
                                     </div>
                                 </div>
                                 <div class="code-window">
                                     <div class="code-header">
+                                        <span style="font-size:10px; color:white; font-weight:800;">RESPONSE</span>
                                         <button class="copy-pill" onclick="copyToClipboard('res-${id}')">COPY</button>
                                     </div>
                                     <div class="code-body">
-                                        <pre id="res-${id}">// Output will appear here...</pre>
+                                        <pre id="res-${id}">Run request to see output...</pre>
                                     </div>
                                 </div>
                             </div>
@@ -551,7 +542,6 @@ async function loadSchema(){
                 </div>`;
             });
         });
-
         tags.forEach(t=>{
             const b=document.createElement('button');
             b.className='cat-pill';
@@ -563,16 +553,8 @@ async function loadSchema(){
             };
             catRow.appendChild(b);
         });
-
         container.innerHTML=html;
-
-        const hash=location.hash;
-        if(hash.startsWith("#endpoint=")){
-            const hid=hash.split("=")[1];
-            setTimeout(()=>toggleApi(hid),500);
-        }
-
-    }catch(e){
+    } catch(e){
         container.innerHTML=`<div style="text-align:center;color:var(--primary);padding:50px;">LOAD FAILED</div>`;
     }
 }
@@ -581,4 +563,3 @@ window.onload = loadSchema;
 </script>
 </body>
 </html>
-
