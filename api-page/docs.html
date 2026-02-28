@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<meta name="description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
+<meta name="keywords" content="XTE APIS, Rest API, Developer Tools, Free API">
+<meta name="author" content="XTE ID">
+
+<title>XTE APIS</title>
+<link rel="icon" href="src/icon.jpg">
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="XTE APIS">
+<meta property="og:title" content="XTE APIS">
+<meta property="og:description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
+<meta property="og:url" content="https://apis.xte.web.id">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://apis.xte.web.id/src/icon.jpg">
+<meta property="og:image:secure_url" content="https://apis.xte.web.id/src/icon.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="XTE APIS">
+<meta name="twitter:description" content="Akselerasi development Anda dengan koleksi REST API terlengkap dan stabil. Gratis dan performa tinggi.">
+<meta name="twitter:image" content="https://apis.xte.web.id/src/icon.jpg">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons+Round">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #FF5F00;
+            --primary-glow: rgba(255, 95, 0, 0.3);
+            --secondary: #1E293B;
+            --bg: #FFFFFF;
+            --card: #F8F9FA;
+            --card-hover: #F1F5F9;
+            --text-main: #0F172A;
+            --text-dim: #64748B;
+            --border: #E2E8F0;
+            --radius-main: 24px;
+            --radius-inner: 16px;
+            --ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --grid-color: rgba(15, 23, 42, 0.05);
+            --grid-size: 30px;
+        }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .nav-float {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1200px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+.api-header.active i {
+    transform: rotate(180deg);
+    transition: 0.3s;
+}
+
+        .search-container {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 15px;
+            position: relative;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .search-container input {
+            width: 100%;
+            background: rgba(241, 245, 249, 0.8);
+            border: 1px solid var(--border);
+            padding: 10px 15px 10px 42px;
+            border-radius: 50px;
+            color: var(--text-main);
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+/* Loading animation */
+.loader {
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top: 3px solid #00ffe7;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+        .search-container input:focus { border-color: var(--primary); background: #FFFFFF; }
+
+        .search-results-popover {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1001;
+        }
+
+        .search-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: 0.2s;
+        }
+
+        .search-item:hover { background: var(--card-hover); }
+        .search-item:last-child { border-bottom: none; }
+        .search-item .m-tag { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; background: var(--primary); color: white; }
+        .search-item .p-text { font-size: 13px; font-family: 'JetBrains Mono'; color: var(--text-main); font-weight: 600; }
+
+        .menu-trigger {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .hero {
+            padding: 140px 24px 40px;
+            text-align: center;
+            background: radial-gradient(circle at top right, rgba(255,95,0,0.05), transparent),
+                        radial-gradient(circle at bottom left, rgba(255,95,0,0.05), transparent);
+        }
+
+        .hero-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            border: 2px solid var(--primary);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(32px, 8vw, 56px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text-main);
+        }
+
+        .hero-title span { color: var(--primary); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 20px 100px;
+        }
+
+        .cat-scroll {
+            display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding: 5px 0 15px; scrollbar-width: none;
+        }
+        .cat-scroll::-webkit-scrollbar { display: none; }
+
+        .cat-pill {
+            background: var(--card); border: 1px solid var(--border); color: var(--text-dim); padding: 10px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: 0.3s;
+        }
+        .cat-pill.active { background: var(--primary); color: white; border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 5px 15px var(--primary-glow); }
+
+        .api-card {
+            background: rgba(248, 249, 250, 0.8); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: var(--radius-main); margin-bottom: 20px; overflow: hidden; transition: 0.4s var(--ease);
+            scroll-margin-top: 100px;
+        }
+        .api-card:hover { border-color: var(--primary); background: #FFFFFF; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        .api-header { padding: 24px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .method-badge { background: var(--primary); color: white; font-size: 10px; font-weight: 900; padding: 4px 12px; border-radius: 8px; text-transform: uppercase; }
+        .path-text { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text-main); margin-left: 15px; flex: 1; font-weight: 600; }
+
+        .api-details { display: none; background: #FFFFFF; border-top: 1px solid var(--border); animation: slideDown 0.4s var(--ease); }
+        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+        .api-details.active { display: block; }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr; }
+        @media (min-width: 992px) { .detail-grid { grid-template-columns: 1fr 1fr; } }
+
+        .form-section { padding: 30px; border-right: 1px solid var(--border); }
+        .field-group { margin-bottom: 20px; }
+        .field-group label { display: block; font-size: 11px; font-weight: 800; color: var(--text-dim); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .field-group input { width: 100%; background: #F8F9FA; border: 1px solid var(--border); padding: 14px; border-radius: var(--radius-inner); color: var(--text-main); font-size: 13px; transition: 0.3s; }
+        .field-group input:focus { border-color: var(--primary); background: #FFFFFF; }
+
+        .btn-exec { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: var(--radius-inner); font-weight: 800; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px var(--primary-glow); }
+
+        .console-section { padding: 30px; background: #F1F5F9; }
+        .code-window { background: #0F172A; border-radius: 16px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .code-header { background: #1E293B; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+        .dots { display: flex; gap: 6px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot-1 { background: #FF5F56; }
+        .dot-2 { background: #FFBD2E; }
+        .dot-3 { background: #27C93F; }
+
+        .code-body { padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #94A3B8; max-height: 350px; overflow-y: auto; position: relative; }
+        .copy-pill { background: var(--primary); color: white; font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 4px; cursor: pointer; border: none; }
+        pre { white-space: pre-wrap; word-break: break-all; color: #4ADE80; }
+
+        .side-panel { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.1); backdrop-filter: blur(10px); z-index: 2000; opacity: 0; visibility: hidden; transition: 0.4s; }
+        .side-panel.active { opacity: 1; visibility: visible; }
+        .panel-content { position: absolute; right: 20px; top: 20px; bottom: 20px; width: 300px; background: #FFFFFF; border-radius: 32px; padding: 40px 24px; transform: translateX(120%); transition: 0.5s var(--ease); border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .side-panel.active .panel-content { transform: translateX(0); }
+
+        .nav-link { text-decoration: none; color: var(--text-main); font-weight: 700; padding: 16px; background: var(--card); border-radius: 16px; display: flex; align-items: center; gap: 15px; margin-bottom: 12px; transition: 0.3s; }
+        .nav-link:hover { background: var(--primary); color: white; transform: translateX(5px); }
+
+        .notification { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(150px); background: #0F172A; color: #FFFFFF; padding: 14px 28px; border-radius: 100px; display: flex; align-items: center; gap: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); z-index: 9999; transition: 0.6s var(--ease); }
+        .notification.active { transform: translateX(-50%) translateY(0); }
+        
+        @keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-float">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <img src="src/icon.jpg" style="width: 32px; height: 32px; border-radius: 10px;">
+            <span style="font-family: 'Space Grotesk'; font-weight: 800; letter-spacing: 1px; font-size: 18px; color: var(--text-main);">XTE APIS</span>
+        </div>
+        <div class="search-container">
+            <i class="material-icons-round">search</i>
+            <input type="text" id="apiSearch" placeholder="Search API Endpoints..." autocomplete="off">
+            <div class="search-results-popover" id="searchResults"></div>
+        </div>
+        <button class="menu-trigger" id="openMenu">
+            <i class="material-icons-round">menu</i>
+        </button>
+    </nav>
+
+    <div class="side-panel" id="sidePanel">
+        <div class="panel-content">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h2 style="font-weight: 800; color: var(--text-main);">Menu</h2>
+                <i class="material-icons-round" style="cursor:pointer; color: var(--text-dim);" id="closeMenu">close</i>
+            </div>
+            <a href="/" class="nav-link"><i class="material-icons-round">home</i> Home</a>
+            <a href="/docs" class="nav-link"><i class="material-icons-round">api</i> API Docs</a>
+            <a href="/dev" class="nav-link"><i class="material-icons-round">code</i> Developer</a>
+        </div>
+    </div>
+
+    <section class="hero">
+        <img src="src/icon.jpg" alt="Logo" class="hero-img">
+        <h1 class="hero-title">XTE <span>APIS</span></h1>
+        <p style="color: var(--text-dim); margin-top: 10px; font-weight: 600;">Modern API Documentation Interface</p>
+    </section>
+
+    <div class="container">
+        <div class="cat-scroll" id="catRow">
+            <button class="cat-pill active" id="btn-all" onclick="filterByTag('all')">ALL ENDPOINT</button>
+        </div>
+        <div id="apiContainer">
+            <div style="text-align:center; padding:100px; color:var(--text-dim);">
+                <i class="material-icons-round" style="font-size: 48px; display: block; margin-bottom: 10px; animation: spin 2s linear infinite;">sync</i>
+                Initializing Interface...
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="toast">
+        <i class="material-icons-round" style="color: var(--primary)">check_circle</i>
+        <span style="font-weight: 700; font-size: 14px;" id="toastMsg">Action successful</span>
+    </div>
+
+    <script>
+const BASE_URL = "https://api.xte.web.id";
+const sidePanel = document.getElementById('sidePanel');
+const openMenu = document.getElementById('openMenu');
+const closeMenu = document.getElementById('closeMenu');
+const toast = document.getElementById('toast');
+const apiSearch = document.getElementById('apiSearch');
+const searchResults = document.getElementById('searchResults');
+
+let apiDataStore = [];
+let endpoints = {};
+let searchTimer;
+
+openMenu.onclick = () => sidePanel.classList.add('active');
+closeMenu.onclick = () => sidePanel.classList.remove('active');
+sidePanel.onclick = (e) => { if(e.target === sidePanel) sidePanel.classList.remove('active'); };
+
+function showToast(msg){
+    document.getElementById('toastMsg').textContent = msg;
+    toast.classList.add('active');
+    setTimeout(()=>toast.classList.remove('active'),3000);
+}
+
+function copyToClipboard(id){
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text);
+    showToast("Copied to clipboard!");
+}
+
+function toggleApi(id){
+    const el = document.getElementById(`details-${id}`);
+    const card = document.getElementById(`card-${id}`);
+    const header = card.querySelector('.api-header');
+
+    const isActive = el.classList.contains('active');
+
+    document.querySelectorAll('.api-details').forEach(d=>d.classList.remove('active'));
+    document.querySelectorAll('.api-header').forEach(h=>h.classList.remove('active'));
+
+    if(!isActive){
+        el.classList.add('active');
+        header.classList.add('active');
+        location.hash = "endpoint=" + id;
+        card.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+}
+
+function buildQuery(fd){
+    const p = new URLSearchParams();
+    for(let [k,v] of fd.entries()) if(v) p.append(k,v);
+    return p;
+}
+
+function updateCurl(id, method, path){
+    const form = document.getElementById(`form-${id}`);
+    const curlDisplay = document.getElementById(`curl-${id}`);
+    const fd = new FormData(form);
+    const p = buildQuery(fd);
+
+    let url = BASE_URL + path;
+    if(method === "GET" && p.toString()) url += "?" + p.toString();
+
+    curlDisplay.textContent = `curl -X ${method} "${url}"`;
+}
+
+async function runRequest(id, method, path){
+    const btn = document.getElementById(`btn-${id}`);
+    const pre = document.getElementById(`res-${id}`);
+
+    btn.textContent = "LOADING...";
+    btn.disabled = true;
+    pre.innerHTML = `<div class="loader"></div>`;
+
+    const form = document.getElementById(`form-${id}`);
+    const fd = new FormData(form);
+    const p = buildQuery(fd);
+
+    let url = BASE_URL + path;
+    if(method === "GET" && p.toString()) url += "?" + p.toString();
+
+    try{
+        const res = await fetch(url,{method});
+        const type = res.headers.get("content-type") || "";
+
+        if(type.includes("image")){
+            const blob = await res.blob();
+            pre.innerHTML = `<img src="${URL.createObjectURL(blob)}" style="max-width:100%;border-radius:12px;margin-top:10px;">`;
+        }
+        else if(type.includes("application/json")){
+            const json = await res.json();
+            pre.textContent = JSON.stringify(json,null,2);
+        }
+        else{
+            const text = await res.text();
+            pre.textContent = text;
+        }
+    }
+    catch(e){
+        pre.textContent = "// Error: " + e.message;
+    }
+    finally{
+        btn.textContent = "EXECUTE";
+        btn.disabled = false;
+    }
+}
+
+function filterByTag(tag){
+    document.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
+    if(tag==='all') document.getElementById('btn-all')?.classList.add('active');
+
+    document.querySelectorAll('.api-card').forEach(el=>{
+        el.style.display = (tag==='all'||el.dataset.tag===tag)?'block':'none';
+    });
+}
+
+(function(){
+    const path = window.location.pathname.replace(/\/+$/,"")||"/";
+    if(path!=="/"&&!path.startsWith("/docs")&&!path.startsWith("/dev")){
+        window.location.replace("/nt");
+    }
+})();
+
+apiSearch.oninput = ()=>{
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(runSearch,120);
+};
+
+function runSearch(){
+    const val = apiSearch.value.toLowerCase();
+    if(!val){ searchResults.style.display='none'; return; }
+
+    const matches = apiDataStore.filter(item =>
+        item.path.toLowerCase().includes(val) ||
+        (item.info.summary && item.info.summary.toLowerCase().includes(val))
+    );
+
+    if(matches.length){
+        searchResults.innerHTML = matches.map(m=>`
+            <div class="search-item" onclick="selectSearch(${m.id})">
+                <span class="m-tag">${m.method.toUpperCase()}</span>
+                <span class="p-text">${m.path}</span>
+            </div>
+        `).join('');
+        searchResults.style.display='block';
+    } else searchResults.style.display='none';
+}
+
+function selectSearch(id){
+    searchResults.style.display='none';
+    apiSearch.value='';
+    filterByTag('all');
+    toggleApi(id);
+}
+
+document.addEventListener('click',(e)=>{
+    if(!apiSearch.contains(e.target)&&!searchResults.contains(e.target)){
+        searchResults.style.display='none';
+    }
+});
+
+async function loadSchema(){
+    const container = document.getElementById('apiContainer');
+    const catRow = document.getElementById('catRow');
+
+    try{
+        const r = await fetch('src/schema.json');
+        const data = await r.json();
+
+        const tags = new Set();
+        let html='';
+        let idx=0;
+
+        Object.entries(data.paths).forEach(([path,methods])=>{
+            Object.entries(methods).forEach(([method,info])=>{
+                const id = idx++;
+                const tag = info.tags?.[0] || 'General';
+                const m = method.toUpperCase();
+
+                tags.add(tag);
+                apiDataStore.push({id,path,method,info,tag});
+
+                html += `
+                <div class="api-card" id="card-${id}" data-tag="${tag}">
+                    <div class="api-header" onclick="toggleApi(${id})">
+                        <span class="method-badge">${m}</span>
+                        <span class="path-text">${path}</span>
+                        <i class="material-icons-round" style="color:var(--text-dim)">expand_more</i>
+                    </div>
+                    <div class="api-details" id="details-${id}">
+                        <div class="detail-grid">
+                            <div class="form-section">
+                                <form id="form-${id}" onsubmit="return false">
+                                    ${(info.parameters||[]).map(p=>`
+                                        <div class="field-group">
+                                            <label>${p.name} ${p.required?'<span style="color:var(--primary)">*</span>':''}</label>
+                                            <input type="text" name="${p.name}" placeholder="${p.description||''}"
+                                            oninput="updateCurl(${id},'${m}','${path}')">
+                                        </div>
+                                    `).join('')}
+                                    <button class="btn-exec" id="btn-${id}" onclick="runRequest(${id},'${m}','${path}')">EXECUTE</button>
+                                </form>
+                            </div>
+                            <div class="console-section">
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <button class="copy-pill" onclick="copyToClipboard('curl-${id}')">CURL</button>
+                                    </div>
+                                    <div class="code-body">
+                                        <pre id="curl-${id}">curl -X ${m} "${BASE_URL}${path}"</pre>
+                                    </div>
+                                </div>
+                                <div class="code-window">
+                                    <div class="code-header">
+                                        <button class="copy-pill" onclick="copyToClipboard('res-${id}')">COPY</button>
+                                    </div>
+                                    <div class="code-body">
+                                        <pre id="res-${id}">// Output will appear here...</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+        });
+
+        tags.forEach(t=>{
+            const b=document.createElement('button');
+            b.className='cat-pill';
+            b.textContent=t.toUpperCase();
+            b.onclick=(e)=>{
+                document.querySelectorAll('.cat-pill').forEach(btn=>btn.classList.remove('active'));
+                filterByTag(t);
+                e.target.classList.add('active');
+            };
+            catRow.appendChild(b);
+        });
+
+        container.innerHTML=html;
+
+        const hash=location.hash;
+        if(hash.startsWith("#endpoint=")){
+            const hid=hash.split("=")[1];
+            setTimeout(()=>toggleApi(hid),500);
+        }
+
+    }catch(e){
+        container.innerHTML=`<div style="text-align:center;color:var(--primary);padding:50px;">LOAD FAILED</div>`;
+    }
+}
+
+window.onload = loadSchema;
+</script>
+</body>
+</html>
+
